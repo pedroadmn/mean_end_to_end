@@ -7,6 +7,11 @@ var morgan = require('morgan');
 //To create an instance of our application
 var app = express();
 
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 var db = "mongodb://localhost/mean_end_to_end";
 
 mongoose.connect(db, function(err, response){
@@ -16,7 +21,7 @@ mongoose.connect(db, function(err, response){
 		console.log('Connected to connected ' + db);
 	}
 });
-
+	
 var router = express.Router();
 
 //GET
@@ -31,11 +36,23 @@ router.get('/api/users', function(request, response){
 	});
 });
 
+router.post('/api/users', function(request, response){
+	console.log(request.body);
+	var model = new Model();
+	model.name = request.body.name;
+	model.age = request.body.age;
+	model.save(function(err, user){
+		if(err){
+			response.status(500).send(err)
+		}
+		else {
+			response.status(201).send(user)
+		}
+	});
+});
+
+
 app.use('/', router);
-
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({extended:true}));
 
 //Can use it as our logger
 app.use(morgan('dev'));

@@ -1,7 +1,5 @@
 <div class="container">
-	
-	<h1>{{vm.title}}</h1>
-
+	<h1></h1>
 	<div class="container users-container">
 		<table class="table table-bordered table-striped table-hovered table-condensed">
 			<th>Name</th>
@@ -16,7 +14,20 @@
 				</td>
 			</tr>
 		</table>
+		<button class="btn btn-primary btn-md" ng-hide="vm.adduser==true;" ng-click="vm.adduser=!vm.adduser">Add a user</button>
+	</div>
 
+	<div class="container create-users" ng-hide="!vm.adduser">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input required type="text" id="name" class="form-control" style="width: 300px" ng-model="vm.user.name">
+		</div>
+		<div class="form-group">
+			<label for="age">Age</label>
+			<input required type="number" id="age" class="form-control" style="width: 300px" ng-model="vm.user.age">
+		</div>
+		<button class="btn btn-success" ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.age">Add</button>
+		<button class="btn btn-primary" ng-click="vm.adduser = false;" >Back</button>
 	</div>
 
 </div>
