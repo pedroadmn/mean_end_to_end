@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
+	<script type="text/javascript" src="https://code.angularjs.org/1.6.0-rc.2/angular-route.js"></script>
+	<script type="text/javascript" >
+		var app = angular.module('app', ['ngRoute']);
+
+		app.controller('HomeController', function($http){
+			var vm = this;
+			vm.user = [];
+			vm.getUsers = function(){
+				$http.get('/api/users').then(function(response){
+					vm.users = response.data;
+				});
+			}
+			vm.getUsers();
+		});
+
+		app.config(function($routeProvider){
+
+			$routeProvider.when('/', {
+				controller: 'HomeController',
+				controllerAs: 'vm',
+				templateUrl: './home.html'
+			});
+
+			$routeProvider.otherwise('/');
+
+		});
+	</script>
+	<title>MEAN Stack End 2 End</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div ng-view></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
