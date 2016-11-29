@@ -12,6 +12,13 @@
 		app.controller('HomeController', function($http){
 			var vm = this;
 			vm.users = [];
+			vm.detailedUser;
+
+			vm.showDetails = function(user){
+				vm.detailedUser = user;
+				vm.detailed = true;
+			}
+
 			vm.getUsers = function(){
 				$http.get('/api/users').then(function(response){
 					vm.users = response.data;

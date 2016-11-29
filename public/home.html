@@ -1,13 +1,13 @@
 <div class="container">
 	<h1></h1>
 	<div class="container users-container">
-		<table class="table table-bordered table-striped table-hovered table-condensed">
+		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
 			<th>Name</th>
 			<th>Age</th>
 			<th>Action</th>
 			<tr ng-repeat="user in vm.users">
-				<td ng-if="!editing">{{user.name}}</td>
-				<td ng-if="!editing">{{user.age}}</td>
+				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.name}}</td>
+				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.age}}</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="user.name" class="form-control" style="width: 250px"></input>
 				</td>
@@ -22,7 +22,7 @@
 				</td>
 			</tr>
 		</table>
-		<button class="btn btn-primary btn-md" ng-hide="vm.adduser==true;" ng-click="vm.adduser=!vm.adduser">Add a user</button>
+		<button class="btn btn-primary btn-md" ng-hide="vm.detailed" ng-hide="vm.detailed === true || vm.adduser==true;" ng-click="vm.adduser=!vm.adduser">Add a user</button>
 	</div>
 
 	<div class="container create-users" ng-hide="!vm.adduser">
@@ -34,8 +34,16 @@
 			<label for="age">Age</label>
 			<input required type="number" id="age" class="form-control" style="width: 300px" ng-model="vm.user.age">
 		</div>
-		<button class="btn btn-success" ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.age">Add</button>
-		<button class="btn btn-primary" ng-click="vm.adduser = false;" >Back</button>
+		<button class="btn btn-success"  ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.age">Add</button>
+		<button class="btn btn-primary" ng-click="vm.adduser = false" >Back</button>
+		
 	</div>
-
+	<div class="container details-container" ng-if="vm.detailed === true">
+			<div class="jumbotron">
+				<div class="close" style="font-size: 50px; color: black" ng-click="vm.detailed=false;">X</div>
+				<h1>You are viewing the details of {{vm.detailedUser._id}}</h1>
+				<h1>{{vm.detailedUser.name}}</h1>
+				<h1>{{vm.detailedUser.age}}</h1>
+			</div>
+		</div>
 </div>
