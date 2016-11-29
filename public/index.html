@@ -19,6 +19,15 @@
 			}
 			vm.getUsers();
 
+			vm.updateUser = function(user){
+				if(user){
+					$http.put('/api/users/', user).then(function(response){
+						console.log('updated user');
+						vm.getUsers();
+					})
+				}
+			}
+
 			vm.removeUser = function(user){
 				if(user){
 					$http.delete('/api/users/' + user._id).then(function(response){

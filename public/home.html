@@ -6,11 +6,19 @@
 			<th>Age</th>
 			<th>Action</th>
 			<tr ng-repeat="user in vm.users">
-				<td>{{user.name}}</td>
-				<td>{{user.age}}</td>
+				<td ng-if="!editing">{{user.name}}</td>
+				<td ng-if="!editing">{{user.age}}</td>
+				<td ng-if="editing">
+					<input type="text" ng-model="user.name" class="form-control" style="width: 250px"></input>
+				</td>
+				<td ng-if="editing">
+					<input type="text" ng-model="user.age" class="form-control" style="width: 250px"></input>
+				</td>
 				<td>
-					<button class="btn btn-warning">Edit</button>
-					<button class="btn btn-danger" ng-click="vm.removeUser(user)">Delete</button>
+					<button class="btn btn-warning" ng-hide="editing" ng-click="editing=!editing">Edit</button>
+					<button class="btn btn-success" ng-hide="!editing" ng-click="vm.updateUser(user); editing = !editing">Save</button>
+					<button class="btn btn-primary" ng-hide="!editing" ng-click="editing=!editing">Back</button>
+					<button class="btn btn-danger" ng-hide="editing" ng-click="vm.removeUser(user)">Delete</button>
 				</td>
 			</tr>
 		</table>
